@@ -89,7 +89,7 @@
         $('#department').val(data[4]);
     });
 
-    $('#studentForm').submit(function(e) {
+    $('#updateButton').click(function(e) {
         e.preventDefault();
 
         let id = $('#id').val();
@@ -106,7 +106,6 @@
 
         $.ajax({
             type: "PUT",
-            dataType: "json",
             url: "{{route('student.update')}}",
             data: {
                 id: id,
@@ -122,12 +121,53 @@
                 $("#name").val('');
                 $("#email").val('');
                 $("#phone").val('');
+                $("#department").val('');
 
                 allData();
             },
             error: function(error) {
-                console.log(error.responseJSON);
                 alert("Data not updated!!!");
+            }
+        });
+    });
+
+    $('#saveButton').click(function(e) {
+        e.preventDefault();
+
+        let name = $('#name').val();
+        let email = $('#email').val();
+        let phone = $('#phone').val();
+        let department = $('#department').val();
+        let _token = $("input[name=_token]").val();
+
+        console.log(name);
+        console.log(email);
+        console.log(phone);
+        console.log(department);
+
+        $.ajax({
+            type: "POST",
+            url: "{{route('student.store')}}",
+            data: {
+                name: name,
+                email: email,
+                phone: phone,
+                department: department,
+                _token: _token
+            },
+            success: function(response) {
+                $("#add_edit_modal").modal('hide');
+                $("#id").val('');
+                $("#name").val('');
+                $("#email").val('');
+                $("#phone").val('');
+                $("#department").val('');
+
+                allData();
+            },
+            error: function(error) {
+                //console.log(error.responseJSON);
+                alert("Data not stored!!!");
             }
         });
     });
