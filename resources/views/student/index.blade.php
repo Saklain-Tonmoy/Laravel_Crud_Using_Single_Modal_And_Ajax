@@ -72,18 +72,6 @@
         });
     }
 
-    // $(document).on('click', 'editButton', function() {
-        
-
-    //     $tr = $(this).closest('tr');
-    //     var data = $tr.children('td').map(function() {
-    //         return $(this).text();
-    //     }).get();
-
-    //     $('#add_edit_modal').modal('show');
-    //     $('#saveButton').hide();
-    //     $('#updateButton').show();
-    // })
 
     $(document).on('click', '#editButton', function() {
         console.log('edit button clicked.');
@@ -99,7 +87,50 @@
         $('#email').val(data[2]);
         $('#phone').val(data[3]);
         $('#department').val(data[4]);
-    })
+    });
+
+    $('#studentForm').submit(function(e) {
+        e.preventDefault();
+
+        let id = $('#id').val();
+        let name = $('#name').val();
+        let email = $('#email').val();
+        let phone = $('#phone').val();
+        let department = $('#department').val();
+        let _token = $("input[name=_token]").val();
+
+        console.log(name);
+        console.log(email);
+        console.log(phone);
+        console.log(department);
+
+        $.ajax({
+            type: "PUT",
+            dataType: "json",
+            url: "{{route('student.update')}}",
+            data: {
+                id: id,
+                name: name,
+                email: email,
+                phone: phone,
+                department: department,
+                _token: _token
+            },
+            success: function(response) {
+                $("#add_edit_modal").modal('hide');
+                $("#id").val('');
+                $("#name").val('');
+                $("#email").val('');
+                $("#phone").val('');
+
+                allData();
+            },
+            error: function(error) {
+                console.log(error.responseJSON);
+                alert("Data not updated!!!");
+            }
+        });
+    });
 
 </script>
 

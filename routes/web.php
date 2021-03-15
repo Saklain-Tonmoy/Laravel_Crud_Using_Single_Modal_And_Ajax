@@ -21,3 +21,4 @@ Route::get('/student', function () {
 });
 
 Route::get('/allstudents', [\App\Http\Controllers\StudentController::class, 'allData'])->name('student.allData');
+Route::put('/updatestudent', [\App\Http\Controllers\StudentController::class, 'updateStudent'])->name('student.update');
