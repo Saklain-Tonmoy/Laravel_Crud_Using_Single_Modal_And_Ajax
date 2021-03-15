@@ -72,6 +72,19 @@
         });
     }
 
+    function clearForm() {
+        $("#id").val('');
+        $("#name").val('');
+        $("#email").val('');
+        $("#phone").val('');
+        $("#department").val('');
+    }
+
+    $("#cancelButton").click(function(e) {
+        e.preventDefault();
+        clearForm();
+    })
+
 
     $(document).on('click', '#editButton', function() {
         console.log('edit button clicked.');
@@ -117,6 +130,8 @@
             },
             success: function(response) {
                 $("#add_edit_modal").modal('hide');
+                $('#updateButton').addClass('d-none');
+                $('#saveButton').removeClass('d-none');
                 $("#id").val('');
                 $("#name").val('');
                 $("#email").val('');
@@ -168,6 +183,35 @@
             error: function(error) {
                 //console.log(error.responseJSON);
                 alert("Data not stored!!!");
+            }
+        });
+    });
+
+    $(document).on('click', '#deleteButton', function(e) {
+        e.preventDefault();
+
+        $tr = $(this).closest('tr');
+        var data = $tr.children('td').map(function() {
+            return $(this).text();
+        }).get();
+
+        var token = $(this).data("token");
+        let id = data[0];
+
+        $.ajax({
+            type: "DELETE",
+            url: "{{route('student.delete')}}",
+            data: {
+                id: id,
+                _token: token
+            },
+            success: function(response) {
+                console.log("Data deleted.");
+                allData();
+            },
+            error: function(error) {
+                console.log(error.responseJSON);
+                alert("Data not deleted.");
             }
         });
     });

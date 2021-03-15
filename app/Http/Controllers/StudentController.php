@@ -48,6 +48,13 @@ class StudentController extends Controller
     }
 
     public function deleteStudent(Request $request) {
+        $student = Student::findOrFail($request->id);
+        $status = $student->delete();
 
+        if($status) {
+            return response('Successfully deleted data.');
+        } else {
+            return response('Data not deleted.');
+        }
     }
 }

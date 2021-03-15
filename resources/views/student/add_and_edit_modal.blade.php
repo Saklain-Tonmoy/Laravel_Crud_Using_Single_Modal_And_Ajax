@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" id="cancelButton" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-success" id="saveButton">Save</button>
                     <button type="submit" class="btn btn-success d-none" id="updateButton">Update</button>
                 </div>
