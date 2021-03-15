@@ -83,6 +83,8 @@
     $("#cancelButton").click(function(e) {
         e.preventDefault();
         clearForm();
+        $('#updateButton').addClass('d-none');
+        $('#saveButton').removeClass('d-none');
     })
 
 
